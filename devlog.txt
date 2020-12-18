@@ -8,3 +8,7 @@ Each entry should begin with the following format: firstL -- TIMESTAMP\n ( e.g.:
 
 HelenaW -- 2020-12-17 17:07
 I've drawn and pushed the Greedy Toads flag! Believe it or not, my drawing tablet skills are improving... anyway, it's time for me to go work on the project design. :)
+
+aribC -- 2020-12-17 19:57
+I made a branch 'create-page' which has the code for adding data from a form for creating a page to a table, 'data_subtopics' in a database, 'subtopics.db'. The function used for this is
+called create-page() which involves functions from 'create.py', add_page_data() and _is_valid()	(the latter checking if the entry name already exists in the db). Currently just waiting on design doc to be approved before merging pull request for branch.
