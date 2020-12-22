@@ -24,7 +24,7 @@ def story_add_helper(story_id: str, story_contrib: str) -> str:
     db = sqlite3.connect("story.db") #open db if file exists, otherwise create db
     c = db.cursor()               #facilitate db ops -- you will use cursor to trigger db events
     c.execute("INSERT INTO %s(user_id, story_contrib) VALUES(%s, %s);" % (story_id, user_id, '"'+story_contrib+'"')) #Insert the values into the table
-    c.execute("UPDATE user_table SET story_ids = story_ids || %s WHERE user_id = %s;" % (","+story_id, user_id))
+    c.execute("UPDATE user_table SET story_ids = story_ids || %s WHERE user_id = %s;" % ('",'+story_id+'"', user_id))
     render_story(add=True)
     return "Successfully contributed to story and rendered it"
 #Create a render_story function that will accept boolean inputs of create and add  to @app.route("/render").
