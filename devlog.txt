@@ -16,3 +16,7 @@ on design doc to be approved before merging pull request for branch.
 
 anyaZ -- 2020-12-21 8:30
 I added design.pdf
+
+aribC -- 2020-12-22 11:20
+I made a branch 'add-create-renderpage' which has the code for create_story function which creates table in db based on form input from create.html, story_add which passes values from add.html form to story_add_helper, story_add_helper which adds a story_contrib to a table in the database and updates user_table with the fact that a user has worked on something new, and render_story which renders create.html, add.html, or renders story.html with the necessary values based on boolean inputs from the html.
+Not ready to be pushed into main until further testing of everything.
