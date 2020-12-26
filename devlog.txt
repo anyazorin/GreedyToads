@@ -20,3 +20,10 @@ I added design.pdf
 aribC -- 2020-12-22 11:20
 I made a branch 'add-create-renderpage' which has the code for create_story function which creates table in db based on form input from create.html, story_add which passes values from add.html form to story_add_helper, story_add_helper which adds a story_contrib to a table in the database and updates user_table with the fact that a user has worked on something new, and render_story which renders create.html, add.html, or renders story.html with the necessary values based on boolean inputs from the html.
 Not ready to be pushed into main until further testing of everything.
+
+anyaZ -- 2020-12-26 11:10
+-updated design.pdf (removed user_id from user table schema)
+-added design_wiki.pdf
+-created branch 'authentication' which has the login function, the signup/ create new user, and logout, 
+-branch also has the helper function 'getActiveUser()' which returns the username that is currently active
+-login.html needs to have a jinja place over the inputs that is called "err" for an error message, same for signup.html
