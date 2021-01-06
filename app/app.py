@@ -68,7 +68,6 @@ def getActiveUser():
 def create_story() -> None: #Adding page data from created webpage to data_subtopics table in subtopics.db
     args_to_get = ['story_id', 'story_contrib'] #Arguments to look for from create form
     data = {args : request.args[args] for args in args_to_get}
-    data = {'story_id':'the stork','story_contrib':'stonks'}
     try: c.execute("CREATE TABLE %s(id INTEGER PRIMARY KEY, user_id INTEGER, story_contrib TEXT)" % data['story_id'])
     except: return "This story already exists. Sorry, please choose another name!"
     c.commit()
@@ -78,10 +77,10 @@ def create_story() -> None: #Adding page data from created webpage to data_subto
 def story_add() -> None:
     args_to_get = ['story_id', 'story_contrib'] #Arguments to look for from create form
     data = {args : request.args[args] for args in args_to_get}
-    story_add_helper(story_id, story_contrib)
+    story_add_helper(data['story_id'], data['story_contrib'])
 
 def story_add_helper(story_id: str, story_contrib: str) -> str:
-    user_id = str(getActiveUserID())
+    user_id = str(getActiveUser())
     c.execute("INSERT INTO %s(user_id, story_contrib) VALUES(%s, %s);" % (story_id, user_id, '"'+story_contrib+'"')) #Insert the values into the table
     c.execute("UPDATE user_table SET story_ids = story_ids || %s WHERE user_id = %s;" % ('",'+story_id+'"', '",'+user_id+'"'))
     c.commit()
