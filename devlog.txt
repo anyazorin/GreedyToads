@@ -27,3 +27,8 @@ anyaZ -- 2020-12-26 11:10
 -created branch 'authentication' which has the login function, the signup/ create new user, and logout, 
 -branch also has the helper function 'getActiveUser()' which returns the username that is currently active
 -login.html needs to have a jinja place over the inputs that is called "err" for an error message, same for signup.html
+
+anyaZ -- 2021-1-6 9:17
+Design Doc Updates
+-We have replaced the storypage system with a much simpler system of 3 pages: storyCreate, storyAdd, and storyView.
+-MVP finished 2021-1-6, all parts are finished (in seperate branches), just need to combine them 
