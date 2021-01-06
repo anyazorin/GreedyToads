@@ -11,7 +11,7 @@ I've drawn and pushed the Greedy Toads flag! Believe it or not, my drawing table
 
 aribC -- 2020-12-17 19:57
 I made a branch 'create-page' which has the code for adding data from a form for creating a page to a table, 'data_subtopics' in a database, 'subtopics.db'. The function used for this is
-called create-page() which involves functions from 'create.py', add_page_data() and _is_valid()	(the latter checking if the entry name already exists in the db). Currently just waiting 
+called create-page() which involves functions from 'create.py', add_page_data() and _is_valid()	(the latter checking if the entry name already exists in the db). Currently just waiting
 on design doc to be approved before merging pull request for branch.
 
 anyaZ -- 2020-12-21 8:30
@@ -24,9 +24,12 @@ Not ready to be pushed into main until further testing of everything.
 anyaZ -- 2020-12-26 11:10
 -updated design.pdf (removed user_id from user table schema)
 -added design_wiki.pdf
--created branch 'authentication' which has the login function, the signup/ create new user, and logout, 
+-created branch 'authentication' which has the login function, the signup/ create new user, and logout,
 -branch also has the helper function 'getActiveUser()' which returns the username that is currently active
 -login.html needs to have a jinja place over the inputs that is called "err" for an error message, same for signup.html
+
+helenaW -- 2020-12-30 12:18
+I'm assembling the basic html for our website! We ultimately decided to scrap the whole "story page serving 3 different functions" idea because 0. lazy, and 1. it doesn't cost anything to make a few more html files, amirite? Right now, it's all pretty ugly, but our website has a bunch of forms for people to put things in and publish stuff. There's ways to get from page to page, and it's all looking pretty promising! However, it's also currently DECEASED because it hasn't been wired up with the backend. Still, I'll be on call for the backend work over the break, and I do hope to make this website a LITTLE more tolerable... probably with marquees.
 
 anyaZ -- 2021-1-6 9:17
 Design Doc Updates
