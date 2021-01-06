@@ -8,4 +8,4 @@ this template stolen from team RIID, their help is much appreciated
 ## Description
 Users can view other users’ stories. They can also create an account, and they can add entries to a story or start a new one.
 ## Launch codes
-<NOT DETERMINED>
+NOT DETERMINED
