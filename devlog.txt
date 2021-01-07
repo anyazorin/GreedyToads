@@ -35,3 +35,10 @@ anyaZ -- 2021-1-6 9:17
 Design Doc Updates
 -We have replaced the storypage system with a much simpler system of 3 pages: storyCreate, storyAdd, and storyView.
 -MVP finished 2021-1-6, all parts are finished (in seperate branches), just need to combine them 
+
+aribC -- 2021-1-7 13:22
+Refactored code other than render_home() which is incomplete
+Added encrypt_id() and decrypt_id() with encryption causing multi phrase or story_ids with commas to not break everything
+- encrypt_id() should be used on story_titles when trying to read from db
+- decrypt_id() should be used after you've either grabbed table names from db or if outputting to an html file
+Revealed bug with explore.html where it will only generate the first word of each story_id rather than the full story_id
