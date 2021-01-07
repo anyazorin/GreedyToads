@@ -42,3 +42,10 @@ Added encrypt_id() and decrypt_id() with encryption causing multi phrase or stor
 - encrypt_id() should be used on story_titles when trying to read from db
 - decrypt_id() should be used after you've either grabbed table names from db or if outputting to an html file
 Revealed bug with explore.html where it will only generate the first word of each story_id rather than the full story_id
+
+aribC -- 2021-1-7 18:32
+Merged refactor branch into Main
+Completed render_home()
+Code fully refactored
+db_builder.py removed and added to __init__.py
+Minimal working product for code for requirements achieved
