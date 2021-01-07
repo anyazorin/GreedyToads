@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Story Creation</title>
-  </head>
-  <body>
-    <h1>Captain Toad's Storymaker</h1>
-    <i><t>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</t></i>
-    <br>
-    <br>
-    <h2>Adding Story Entry</h2>
-    <br>
-    <form action="/add">
-      Story Text: <input type="text" name="story">
-    </form>
-    <br>
-    <form action="homepage.html">
-        <input type="submit" name="homepage" value="Homepage">
-    </form>
-    <form action="explore.html">
-      <input type="submit" value="Explore!">
-    </form>
-    <form action="/logout">
-      <input type="submit" name="logout" value="Logout">
-    </form>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+{% block content %}
+{{title}} </br><br>
+{{old_story_contrib}}
+  <form action="/add">
+    Story Text: <input type="text" name="story_contrib">
+    <input type="submit" name="create1">
+    <input type="hidden" name="story_id" value={{title}}>
+  </form>
+  {{err}}
+{% endblock %}

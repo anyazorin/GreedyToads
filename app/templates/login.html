@@ -9,10 +9,14 @@
     <br>
     <br>
     <h2>Log in to start creating!</h2>
-    <form action="/auth">
+    <form action="/login">
       Username: <input type="text" name="username"><br>
-      Password: <input type="text" name="password"><br>
+      Password: <input type="password" name="password"><br>
+      {{ err }}
       <input type="submit" name="sub1">
+    </form>
+    <form action="/makeAcct">
+    <input type="submit" name="signup1" value="No Account? Sign Up">
     </form>
   </body>
 </html>

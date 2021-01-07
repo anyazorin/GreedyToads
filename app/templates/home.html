@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock %}
+{% block content %}
+{% for title in story_titles %}
+     <form action="/renderView">
+    <input type="hidden" name="story_id" value= {{ title }}>
+    {{ title }}
+     </form>
+    {% endfor %}
+{% endblock %}

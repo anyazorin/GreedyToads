@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Story Viewing</title>
-  </head>
-  <body>
-    <h1>Captain Toad's Storymaker</h1>
-    <i><t>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</t></i>
-    <br>
-    <br>
-    <h2>{{ title }}</h2>
-    <br>
-    {{ story }}
-    <br>
-    <br>
-    <form action="homepage.html">
-        <input type="submit" name="homepage" value="Homepage">
-    </form>
-    <form action="/logout">
-      <input type="submit" name="logout" value="Logout">
-    </form>
-  </body>
-</html>
+{% extends "base.html" %}
+{% block title %} story {% endblock %}
+{% block content %}
+{{title}}<br>
+{% for contrib in story %}
+</br>
+{{ contrib }}
+{% endfor %}
+{% endblock %}

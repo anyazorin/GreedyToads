@@ -1,25 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Explore</title>
-  </head>
-  <body>
-    <h1>Captain Toad's Storymaker</h1>
-    <i><t>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</t></i>
-    <br>
-    <br>
-    <h2>The Explore Page</h2>
-    <i>oh wow there sure are a lot of stories here</i>
-    <br>
-    <br>
-    <form action="homepage.html">
-      <input type="submit" value="Homepage">
+{% extends "base.html" %}
+{% block title %} Explore Page {% endblock %}
+{% block content %}
+{% for title in story_titles %}
+<form action="/renderAdd">
+    <input type="submit" name="story_id" value= {{ title }}>
     </form>
-    <form action="/logout">
-        <input type="submit" name="logout" value="Logout">
-    </form>
-    <form action="storyCreate.html">
-      <input type="submit" name="create" value="Create A New Story">
-    </form>
-  </body>
-</html>
+    {% endfor %}
+{% endblock %}
