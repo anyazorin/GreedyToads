@@ -11,4 +11,4 @@ this template stolen from team RIID, their help is much appreciated
 * Clone the repository GreedyToads: `git clone https://github.com/anyazorin/GreedyToads.git` 
 * Go to the repository: `cd GreedyToads`
 * Install the required modules: `pip install -r requirements.txt`
-* Run __innit__.py: `python app/__init__.py`
+* Run: `python app/__init__.py`
