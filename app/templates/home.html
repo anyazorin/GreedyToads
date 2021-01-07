@@ -2,9 +2,8 @@
 {% block title %} Homepage {% endblock %}
 {% block content %}
 {% for title in story_titles %}
-     <form action="/renderView">
-    <input type="hidden" name="story_id" value= {{ title }}>
-    {{ title }}
-     </form>
+<form action="/renderView">
+    <input type="submit" name="story_id" value= {{title}}>
+</form>
     {% endfor %}
 {% endblock %}

@@ -137,14 +137,16 @@ def render_home():
     db.commit()
     db.close()
     db = sqlite3.connect("story.db", check_same_thread=False) 
+    c = db.cursor()
     print(stories)
     story_titles=[]
     for title in stories:
         try: 
-            #c.execute("SELECT user_id FROM ? WHERE user_id=?", (title, "'"+username+"'"))
-            c.execute("SELECT EXISTS(SELECT 1 FROM ? WHERE user_id=?);", (title, username))
+            print("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
+            c.execute("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
+            #c.execute("SELECT EXISTS(SELECT 1 FROM ? WHERE user_id=?);", (title, username))
             print(title)
-            story_titles+=title
+            story_titles+=[title]
         except: print("oops")
     print(story_titles)
     return render_template("home.html", story_titles=story_titles)
@@ -178,9 +180,19 @@ def render_home():
 def explore():
     db = sqlite3.connect("story.db", check_same_thread=False) 
     c = db.cursor()
+    username= getActiveUser()
+    print(username)
     c.execute('SELECT name from sqlite_master where type= "table"')
     print(c.fetchall)
     stories=list(set(item[0] for item in c.fetchall()) - {"users"})
+    story_titles=[]
+    #DOESNT WORK YET
+    for title in stories:
+        try: 
+            c.execute("SELECT user_id FROM "+title+ " WHERE user_id!='"+username+"'")
+            story_titles+=[title]
+        except: print("oops")
+    print(story_titles)
     return render_template("explore.html", story_titles=stories)
 
 if __name__ == "__main__": 
