@@ -67,7 +67,7 @@ def encrypt(id): return id.replace(" ","S10S01").replace(",","C10C01") #Encrypt 
 def decrypt(id): return id.replace("S10S01"," ").replace("C10C01",",") #Decrypt for other purposes
 
 @app.route("/create")
-def create_story() -> None:
+def create_story(): #Creates story table in database
     story_id= request.args["story_id"] #Gets Story Title
     story_contrib=request.args["story_contrib"] #Gets the Story Contribution
     try: c.execute("CREATE TABLE %s(id INTEGER PRIMARY KEY, user_id TEXT, story_contrib TEXT)" % encrypt(story_id))
@@ -76,12 +76,12 @@ def create_story() -> None:
     return story_add_helper(story_id, story_contrib)
 
 @app.route("/add")
-def story_add() -> None:
+def story_add(): #Calls story_add_helper()
     story_id= request.args["story_id"]
     story_contrib=request.args["story_contrib"]
     return story_add_helper(story_id, story_contrib)
 
-def story_add_helper(story_id: str, story_contrib: str) -> str:
+def story_add_helper(story_id: str, story_contrib: str) -> str: #Adds story entry to corresponding table
     user_id = str(getActiveUser())
     story_id = encrypt(story_id)
     c.execute("INSERT INTO %s(user_id, story_contrib) VALUES(%s, %s);" % (story_id, '"'+user_id+'"', '"'+story_contrib+'"')) #Insert the values into the table
@@ -92,11 +92,11 @@ def story_add_helper(story_id: str, story_contrib: str) -> str:
     return render_template("storyView.html", story=story_bits, title=decrypt(story_id)) #Taking function input, not html form input
 
 @app.route("/renderCreate")
-def renderCreateHTML():
+def renderCreateHTML(): #Renders storyCreate.html
     return render_template("storyCreate.html")
 
 @app.route("/renderAdd")
-def renderStoryAdd():
+def renderStoryAdd(): #Renders storyAdd.html with necessary information
     story_id=request.args['story_id']
     c.execute("SELECT * FROM %s ORDER BY id DESC LIMIT 1;" % encrypt(story_id))
     story_contrib = c.fetchone()[2]
@@ -104,13 +104,13 @@ def renderStoryAdd():
     return render_template("storyAdd.html", title= story_id, old_story_contrib = story_contrib, button=button)
 
 @app.route("/renderView")
-def renderFullStory():
+def renderFullStory(): #Renders a story given its story_id
     story_id=request.args['story_id']
     c.execute("SELECT * from " + encrypt(story_id)+";")
     story_bits = [row[2] for row in c.fetchall()]
     return render_template("storyView.html", title=story_id, story=story_bits)
 
-def create_button(title):
+def create_button(title): #Creates a button for HTML
     return '<button type="submit"  name="story_id" value = "'+title+'"> '+title+' </button><br>'
 
 def getUserStories(): #Gets all the stories the current user is a part of
@@ -123,13 +123,13 @@ def getUserStories(): #Gets all the stories the current user is a part of
     return user_stories-{''}
 
 @app.route("/home")
-def render_home():
+def render_home(): #renders home.html
     buttons = Markup("".join([create_button(title) for title in getUserStories()]))
     return render_template("home.html",buttons=buttons)
 
 #shows list of story titles on explore page
 @app.route("/explore")
-def explore():
+def explore(): #Renders explore.html
     c.execute('SELECT name from sqlite_master where type= "table"')
     all_stories=set(decrypt(item[0]) for item in c.fetchall()) - {"users"}
     story_titles = list(all_stories - getUserStories())
