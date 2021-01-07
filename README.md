@@ -6,10 +6,9 @@ this template stolen from team RIID, their help is much appreciated
 * Benjamin Gallai: app.py
 * Helena Williams: HTML templates
 ## Description
-Users can view other users’ stories. They can also create an account, and they can add entries to a story or start a new one.
+ A storytelling website in which users can contribute to stories.  Once at the home page after either logging in or signing up, the user can view stories they have already contributed to. To view stories they can add a new contribution to, they navigate to explore. Once they select a story to add to, the latest contribution to the story will be shown and a text input. They can also create new stories from scratch and log out. 
 ## Launch codes
 * Clone the repository GreedyToads: `git clone https://github.com/anyazorin/GreedyToads.git` 
 * Go to the repository: `cd GreedyToads`
 * Install the required modules: `pip install -r requirements.txt`
-* Run db_builder.py: `python app/db_builder.py`
-* Run app.py: `python app/app.py`
+* Run __innit__.py: `python app/__init__.py`
