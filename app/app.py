@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, Markup
 import sqlite3, random, os
 
 
@@ -64,14 +64,14 @@ def getActiveUser():
     return
 
 #Encrypts and decrypts story_id so it doesn't run into errors later
-def encrypt_id(id): return id.replace(" ","10S01").replace(",","10C01") #Encrypt for DB
-def decrypt_id(id): return id.replace("10S01"," ").replace("10C01",",") #Decrypt for other purposes
+def encrypt(id): return id.replace(" ","S10S01").replace(",","C10C01") #Encrypt for DB
+def decrypt(id): return id.replace("S10S01"," ").replace("C10C01",",") #Decrypt for other purposes
 
 @app.route("/create")
 def create_story() -> None:
     story_id= request.args["story_id"] #Gets Story Title
     story_contrib=request.args["story_contrib"] #Gets the Story Contribution
-    try: c.execute("CREATE TABLE %s(id INTEGER PRIMARY KEY, user_id TEXT, story_contrib TEXT)" % encrypt_id(story_id))
+    try: c.execute("CREATE TABLE %s(id INTEGER PRIMARY KEY, user_id TEXT, story_contrib TEXT)" % encrypt(story_id))
     except: return render_template("storyCreate.html", err="Title already exists, choose another title")
     db.commit()
     return story_add_helper(story_id, story_contrib)
@@ -84,13 +84,13 @@ def story_add() -> None:
 
 def story_add_helper(story_id: str, story_contrib: str) -> str:
     user_id = str(getActiveUser())
-    story_id = encrypt_id(story_id)
+    story_id = encrypt(story_id)
     c.execute("INSERT INTO %s(user_id, story_contrib) VALUES(%s, %s);" % (story_id, '"'+user_id+'"', '"'+story_contrib+'"')) #Insert the values into the table
     c.execute("UPDATE users SET story_ids = story_ids || %s WHERE username = %s;" % ('"'+story_id+',"', '"'+user_id+'"'))
     db.commit()
     c.execute("SELECT * from " + story_id+";")
     story_bits = [row[2] for row in c.fetchall()]
-    return render_template("storyView.html", story=story_bits, title=decrypt_id(story_id)) #Taking function input, not html form input
+    return render_template("storyView.html", story=story_bits, title=decrypt(story_id)) #Taking function input, not html form input
 
 @app.route("/renderCreate")
 def renderCreateHTML():
@@ -99,18 +99,20 @@ def renderCreateHTML():
 @app.route("/renderAdd")
 def renderStoryAdd():
     story_id=request.args['story_id']
-    c.execute("SELECT * FROM %s ORDER BY id DESC LIMIT 1;" % encrypt_id(story_id))
+    c.execute("SELECT * FROM %s ORDER BY id DESC LIMIT 1;" % encrypt(story_id))
     story_contrib = c.fetchone()[2]
-    return render_template("storyAdd.html", title= story_id, old_story_contrib = story_contrib)
+    button = Markup('<input type="hidden"  name="story_id" value = "'+story_id+'">')
+    return render_template("storyAdd.html", title= story_id, old_story_contrib = story_contrib, button=button)
 
 @app.route("/renderView")
 def renderFullStory():
-    return render_template("storyView.html", story=renderStory(request.args['story_id']))
-
-def renderStory(story_id):
-    c.execute("SELECT * from " + encrypt_id(story_id)+";")
+    story_id=request.args['story_id']
+    c.execute("SELECT * from " + encrypt(story_id)+";")
     story_bits = [row[2] for row in c.fetchall()]
-    return render_template("storyView.html")
+    return render_template("storyView.html", title=story_id, story=story_bits)
+
+def create_button(title):
+    return '<button type="submit"  name="story_id" value = "'+title+'"> '+title+' </button><br>'
 
 @app.route("/home")
 def render_home():
@@ -118,63 +120,50 @@ def render_home():
     c = db.cursor()
     c.execute("SELECT * FROM users;")
     username= getActiveUser()
-    print(username)
+    #print(username)
     c.execute('SELECT name from sqlite_master where type= "table"')
     stories=list(set(item[0] for item in c.fetchall()) - {"users"})
     db.commit()
     db.close()
     db = sqlite3.connect("story.db", check_same_thread=False)
     c = db.cursor()
-    print(stories)
+    #print(stories)
     story_titles=[]
     for title in stories:
         try:
-            print("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
+            #print("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
             c.execute("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
             #c.execute("SELECT EXISTS(SELECT 1 FROM ? WHERE user_id=?);", (title, username))
-            print(title)
-            story_titles+=[title]
-        except: print("oops")
-    print(story_titles)
-    return render_template("home.html", story_titles=story_titles)
+            #print(title)
+            story_titles+=[decrypt(title)]
+        except: pass
+    buttons = Markup("".join([create_button(title) for title in story_titles]))
+    return render_template("home.html", buttons = buttons)
 
-
-
-
-    # print(username)
-    # user = c.fetchone()                #user stores first line of user table
-    # while username!= user[0]:      #while form username != table username
-    #     user = c.fetchone()                         #move on to the next line of user table
-
-    # story_ids_str = user[2]                 #user's story_ids as a string (i.e. directly from users table)
-    # story_ids = story_ids_str.split(',')    #list of user's story_ids
-
-    # my_stories = []             #list of stories user has entries in
-
-    # for story_id in story_ids:
-    #     c.execute("SELECT * FROM %s ORDER BY id ASC;" %story_id)
-
-    #     story = ""
-    #     for entry in c.fetchall():
-    #         story += entry[2]
-
-    #     my_stories.append(story)
-
-    # render_template("home.html", story_titles = my_stories, title=story_id)
+#def render_home():
+#    username= getActiveUser()
+#    user_stories = set()
+#    for row in c.fetchall():
+#        if row[0] == username:
+#            user_stories = set(decrypt(item) for item in row[2].split(","))
+#    return render_template("home.html",)
 
 #shows list of story titles on explore page
 @app.route("/explore")
 def explore():
     username= getActiveUser()
     c.execute('SELECT name from sqlite_master where type= "table"')
-    all_stories=set(decrypt_id(item[0]) for item in c.fetchall()) - {"users"}
+    all_stories=set(decrypt(item[0]) for item in c.fetchall()) - {"users"}
     c.execute('SELECT * FROM users;')
     user_stories = set()
     for row in c.fetchall():
         if row[0] == username:
-            user_stories = set(row[2].split(","))
+            user_stories = set(decrypt(item) for item in row[2].split(","))
     story_titles = list(all_stories - user_stories)
-    return render_template("explore.html", story_titles=story_titles)
+    buttons = Markup("".join([create_button(title) for title in story_titles]))
+    return render_template("explore.html", buttons=buttons)
+    #print(story_titles)
+    #return render_template("explore.html", story_titles=story_titles)
 
 if __name__ == "__main__":
     app.debug = True
