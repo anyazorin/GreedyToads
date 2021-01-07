@@ -1,5 +1,5 @@
-# P0: tk by Greedy Toads
-this template stolen from team RIID, their help is much appreciated
+# Storytelling by Greedy Toads
+
 ## Roster
 * Anya Zorin: Project Manager
 * Arib Chowdhury: Databases
