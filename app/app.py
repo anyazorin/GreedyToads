@@ -1,7 +1,5 @@
-
 from flask import Flask, render_template, request, session, Markup
 import sqlite3, random, os
-
 
 app = Flask(__name__)    #create Flask object
 
@@ -27,7 +25,8 @@ def login():
     user= request.args['username']
     password= request.args['password']
     #run a query which returns a true/false if there exists a user/password combo that matches the given one
-    c.execute("SELECT username, password FROM users WHERE username=? AND password=?", (user, password))
+    try: c.execute("SELECT username, password FROM users WHERE username=? AND password=?", (user, password))
+    except: return render_template('login.html', err="Did you run db_builder.py")
     #fetches result from the query
     result = c.fetchone()
     #If the login info is correct, start session and go to home
@@ -114,56 +113,28 @@ def renderFullStory():
 def create_button(title):
     return '<button type="submit"  name="story_id" value = "'+title+'"> '+title+' </button><br>'
 
-@app.route("/home")
-def render_home():
-    db = sqlite3.connect("story.db", check_same_thread=False) #open db if file exists, otherwise create db
-    c = db.cursor()
-    c.execute("SELECT * FROM users;")
+def getUserStories(): #Gets all the stories the current user is a part of
     username= getActiveUser()
-    #print(username)
-    c.execute('SELECT name from sqlite_master where type= "table"')
-    stories=list(set(item[0] for item in c.fetchall()) - {"users"})
-    db.commit()
-    db.close()
-    db = sqlite3.connect("story.db", check_same_thread=False)
-    c = db.cursor()
-    #print(stories)
-    story_titles=[]
-    for title in stories:
-        try:
-            #print("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
-            c.execute("SELECT user_id FROM "+title+ " WHERE user_id='"+username+"'")
-            #c.execute("SELECT EXISTS(SELECT 1 FROM ? WHERE user_id=?);", (title, username))
-            #print(title)
-            story_titles+=[decrypt(title)]
-        except: pass
-    buttons = Markup("".join([create_button(title) for title in story_titles]))
-    return render_template("home.html", buttons = buttons)
-
-#def render_home():
-#    username= getActiveUser()
-#    user_stories = set()
-#    for row in c.fetchall():
-#        if row[0] == username:
-#            user_stories = set(decrypt(item) for item in row[2].split(","))
-#    return render_template("home.html",)
-
-#shows list of story titles on explore page
-@app.route("/explore")
-def explore():
-    username= getActiveUser()
-    c.execute('SELECT name from sqlite_master where type= "table"')
-    all_stories=set(decrypt(item[0]) for item in c.fetchall()) - {"users"}
     c.execute('SELECT * FROM users;')
     user_stories = set()
     for row in c.fetchall():
         if row[0] == username:
             user_stories = set(decrypt(item) for item in row[2].split(","))
-    story_titles = list(all_stories - user_stories)
+    return user_stories-{''}
+
+@app.route("/home")
+def render_home():
+    buttons = Markup("".join([create_button(title) for title in getUserStories()]))
+    return render_template("home.html",buttons=buttons)
+
+#shows list of story titles on explore page
+@app.route("/explore")
+def explore():
+    c.execute('SELECT name from sqlite_master where type= "table"')
+    all_stories=set(decrypt(item[0]) for item in c.fetchall()) - {"users"}
+    story_titles = list(all_stories - getUserStories())
     buttons = Markup("".join([create_button(title) for title in story_titles]))
     return render_template("explore.html", buttons=buttons)
-    #print(story_titles)
-    #return render_template("explore.html", story_titles=story_titles)
 
 if __name__ == "__main__":
     app.debug = True
