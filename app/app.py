@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, Markup
-import sqlite3, random, os
+import sqlite3, os
 
 app = Flask(__name__)    #create Flask object
 
