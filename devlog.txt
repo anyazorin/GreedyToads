@@ -31,6 +31,9 @@ anyaZ -- 2020-12-26 11:10
 helenaW -- 2020-12-30 12:18
 I'm assembling the basic html for our website! We ultimately decided to scrap the whole "story page serving 3 different functions" idea because 0. lazy, and 1. it doesn't cost anything to make a few more html files, amirite? Right now, it's all pretty ugly, but our website has a bunch of forms for people to put things in and publish stuff. There's ways to get from page to page, and it's all looking pretty promising! However, it's also currently DECEASED because it hasn't been wired up with the backend. Still, I'll be on call for the backend work over the break, and I do hope to make this website a LITTLE more tolerable... probably with marquees.
 
+benjaminG -- 2021-1-3 19:37
+Added initial version of render_home() to app.py. 
+
 anyaZ -- 2021-1-6 9:17
 Design Doc Updates/ Issues Resolved
 -We have replaced the storypage system with a much simpler system of 3 pages: storyCreate, storyAdd, and storyView.
