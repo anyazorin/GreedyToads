@@ -1,9 +1,15 @@
 {% extends "base.html" %}
-{% block title %} {{title}} {% endblock %}
+{% block title %}
+  {{title}}
+{% endblock %}
+{% block html_head %}
+{% endblock %}
 {% block content %}
-{{title}}<br>
+<b>Story: {{title}}</b><br>
 {% for contrib in story %}
 </br>
+<p>
 {{ contrib }}
+</p>
 {% endfor %}
 {% endblock %}
