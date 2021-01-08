@@ -1,22 +1,36 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style type="text/css">
+      body{
+        background-color: maroon;
+      }
+      t,h1,h2,.block{
+        background-color: red;
+        font-family: "Lucida Console", "Monaco", monospace;
+        color: white;
+      }
+    </style>
     <title>Login Page</title>
   </head>
   <body>
+    <embed src="../static/toadscream.mp3" loop="true" autostart="true" width="2" height="0">
     <h1>Captain Toad's Storymaker</h1>
     <i><t>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</t></i>
     <br>
     <br>
     <h2>Log in to start creating!</h2>
     <form action="/login">
-      Username: <input type="text" name="username"><br>
-      Password: <input type="password" name="password"><br>
+      <t>Username: <input type="text" name="username"><br>
+      Password: <input type="password" name="password"><br></t>
       {{ err }}
       <input type="submit" name="sub1">
     </form>
     <form action="/makeAcct">
-    <input type="submit" name="signup1" value="No Account? Sign Up">
+    <input type="submit" name="signup1" value="No Account? Sign Up!">
     </form>
+  <marquee behavior="alternate" direction="left" scrollamount="50">
+    <img src="../static/toad.gif" width="300" height="300">
+  </marquee>
   </body>
 </html>

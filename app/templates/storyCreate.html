@@ -2,9 +2,10 @@
 {% block title %} Homepage {% endblock %}
 {% block content %}
   <form action="/create">
-    Title: <input type="text" name="story_id" value="BAH BAH!">
+    <t><b>Title: </b></t><input type="text" name="story_id" value="" style="width: 200px;">
     <br>
-    Story Text: <input type="text" name="story_contrib">
+    <t><b>Story Text: </b></t><br><input type="text" name="story_contrib" style="width: 400px; height: 200px;">
+    <br>
     <input type="submit" name="create1">
   </form>
   {{err}}

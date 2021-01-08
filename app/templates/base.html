@@ -1,27 +1,45 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="../static/css/toad.css" />
     <title>{% block title%} {%endblock%}</title>
+    {% block html_head %}
+      <style type="text/css">
+      t,h1,.block{
+        background-color: red;
+        font-family: "Lucida Console", "Monaco", monospace;
+        color: white;
+      }
+      body{
+        background-color: maroon;
+        background-image: url('../static/toad.png');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      </style>
+    {% endblock %}
   </head>
   <body>
-    <h1>Captain Toad's Storymaker</h1>
-    <i><t>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</t></i>
-    <br>
-    <form action="/home">
-        <input type="submit" value="Home">
-      </form>
-    <form action="/explore">
-      <input type="submit" value="Explore!">
-    </form>
-    <form action="/renderCreate">
-      <input type="submit" name="create_button" value="Create A New Story">
-    </form>
-    <form action="/logout">
-        <input type="submit" name="logout" value="Logout">
-    </form>
+      <embed src="../static/toad.mp3" loop="true" autostart="true" width="2" height="0">
+      <table class = "block">
+        <tr>
+          <td><form action="/home"><input type="submit" value="Home"></form></td>
+          <td><form action="/explore"><input type="submit" value="Explore!"></form></td>
+          <td><form action="/renderCreate"><input type="submit" name="create_button" value="Create A New Story"></form></td>
+          <td><form action="/logout"><input type="submit" name="logout" value="Logout"></form></td>
+        </tr>
+      </table>
+    <t>
+      <h1>Captain Toad's Storymaker</h1>
+      <i>For people who like to talk by screaming "BAH BAH!" at the top of their lungs.</i>
+    </t>
     <br>
     <br>
     <br>
-    {% block content %} {% endblock %}
+    <t>
+    {% block content %}
+    </t>
+    {% endblock %}
   </body>
 </html>

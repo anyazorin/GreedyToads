@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block title %} Homepage {% endblock %}
 {% block content %}
-{{title}} </br><br>
+<b>Story: {{title}}</b> </br><br>
 {{old_story_contrib}}
   <form action="/add">
-    Story Text: <input type="text" name="story_contrib">
+    <br>
+    <b>Story Text:</b> <input type="text" name="story_contrib">
     <input type="submit" name="create1">
     {{button}}
   </form>
