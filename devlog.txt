@@ -52,3 +52,9 @@ Completed render_home()
 Code fully refactored
 db_builder.py removed and added to __init__.py
 Minimal working product for code for requirements achieved
+
+helenaW -- 2021-1-8 1:00
+OH MY LORD this has been a ride!
+Did a whole bunch of fancy frontend just because we achieved MVP.
+Our website is now the most horrible thing you've ever seen...
+Sorry! ;D
